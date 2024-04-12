@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            width: 600px;
+            background-color: black;
+            color: #f4f4f4;
+            padding: 50px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 100px auto 50px;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 2px 2px peru;
+            }
+            to {
+                box-shadow: 0 0 2px 2px lightskyblue; /* Increase the glow effect by adjusting the values */
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #f4f4f4;
+            font-size: larger;
+            font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 10px solid mediumslateblue;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+            font-size: large;
+        }
+
+        button {
+            margin-top: 20px;
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        #peekButton {
+            position: absolute;
+            background-color: transparent;
+            font-size: xx-large;
+            color: #333333;
+            right: 5px;
+            top: 40%;
+            left: 88%;
+            padding: 0;
+            transform: translateY(-50%);
+        }
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            background-color: #333333;
+            width: 100%;
+            right: 0;
+            left: 0;
+            display: inline-flex;
+            padding: 20px;
+        }
+
+        .abhijeetrajhans {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .social {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .social a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .social a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand">Movie Review Database - MRDB</a>
+        </div>
+    </nav>
+
+    <form action="/home-page" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+
+        <label for="password">Password:</label>
+        <div class="password-container">
+            <input type="password" id="password" name="password">
+            <!-- Add the peek button with a neutral face emoji -->
+            <button type="button" id="peekButton" onclick="togglePassword()">😎</button>
+        </div>
+
+        <button type="submit" class="button">Login</button>
+    </form>
+
+    <div class="abhijeetrajhans">a b h i j e e t r a j h a n s</div>
+
+    <div class="social">
+        <a>●</a>
+        <a href="https://github.com/abhijeetrajhansgithub" target="_blank">Github</a>
+        <a>●</a>
+        <a href="https://linkedin.com/in/abhijeetrajhans" target="_blank">LinkedIn</a>
+        <a>●</a>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            const peekButton = document.getElementById("peekButton");
+
+            // Toggle the type attribute of the password input
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                // Change the emoji to one without glasses when peeking
+                peekButton.innerHTML = "😐";
+            } else {
+                passwordInput.type = "password";
+                // Change the emoji back to sunglasses when not peeking
+                peekButton.innerHTML = "😎";
+            }
+        }
+    </script>
+</body>
+
+</html>

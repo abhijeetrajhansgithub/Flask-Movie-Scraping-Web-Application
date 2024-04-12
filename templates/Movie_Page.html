@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Web Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: black;
+            color: #f4f4f4;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+            margin-top: 60px;
+            font-size: large;
+            background-color: black;
+            padding: 10px;
+            position: relative;
+            left: 0;
+            right: 0;
+            margin-left: -20px;
+            margin-right: -20px;
+            animation: marquee 30s linear infinite;
+            overflow: hidden; /* Hide overflowing content */
+            white-space: nowrap; /* Prevent text from wrapping */
+            color: moccasin;
+            width: fit-content; /* Ensure the width fits the content */
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%); /* Initial position, move to the right */
+                color: moccasin;
+            }
+            100% {
+                transform: translateX(-100%); /* Move to the left */
+                color: aquamarine;
+            }
+        }
+
+        #output-container {
+            text-align: left;
+            width: 80%;
+            height: 55vh;
+            overflow-y: scroll;
+            padding: 10px;
+            margin: 10px auto;
+            border-radius: 5px;
+            animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+            font-size: medium;
+            background-color: black;
+            float: left;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 2px 2px peru;
+            }
+            to {
+                box-shadow: 0 0 2px 2px mediumslateblue; /* Increase the glow effect by adjusting the values */
+            }
+        }
+
+        /* Set custom scrollbar width and color */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 85%;
+            border-radius: 7px;
+            margin: 15px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #4CAF50; /* Set the color of the thumb */
+            border-radius: 6px; /* Set border radius to make it round */
+            height: 85%;
+            margin: 15px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #f1f1f1; /* Set the color of the track */
+            height: 85%;
+            border-radius: 7px;
+            margin: 15px;
+        }
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            background-color: #333333;
+            width: 110%;
+            right: 0;
+            left: 0;
+            display: inline-flex;
+            padding: 20px;
+        }
+
+        .abhijeetrajhans {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .social {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 110%;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            z-index: 10000;
+            padding: 10px;
+        }
+
+        .social a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .social a:hover {
+            text-decoration: underline;
+        }
+
+        .search-movie {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 70%;
+            float: left;
+            margin-bottom: 25px;
+            margin-top: 25px;
+        }
+
+        .search-movie label {
+            padding: 10px;
+            margin-right: 10px;
+            margin-left: 10px;
+            white-space: nowrap;
+            font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+            font-size: x-large;
+            font-style: italic;
+            background: linear-gradient(45deg, #ffc0cb 0%, #f08080 20%, #c0d8f7 40%, #9fa8da 60%, #e0c0f0 80%, #d16474 100%); /* Constant gradient */
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .search-movie button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 15px;
+            border-radius: 5px;
+            font-size: large;
+            font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+        }
+
+        .search-movie button:hover {
+            background-color: #2980b9;
+        }
+
+        .search-movie input {
+            width: 120%;
+            float: left;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-bottom: 0;
+            border: 2px solid lightseagreen;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+            font-size: large;
+        }
+
+        #outputImage {
+            position: fixed;
+            top: 120px; /* Adjust the top position as needed */
+            right: 35px; /* Adjust the right position as needed */
+            max-width: 200px; /* Set a max-width for the image */
+            max-height: 400px; /* Set a max-height for the image */
+            display: none; /* Initially hide the image */
+            border: 4px white solid;
+            border-radius: 5px;
+            background-clip: padding-box;
+        }
+
+        #outputImage[src]:not([src=""]):not([src="null"]) {
+            display: block; /* Show the image when the src is not empty and not null */
+        }
+
+        .button-1-comments {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 5px;
+            float: right;
+            font-size: large;
+            font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+            position: fixed;
+            bottom: 75px;
+        }
+
+        .button-1-comments:hover {
+            background-color: #2980b9;
+        }
+
+        .buttons {
+            float: right;
+            margin-right: 175px;
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: rgba(80, 80, 80, 0.8); /* Translucent dark background */
+            color: #fff; /* Text color in dark mode */
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            width: 600px;
+            height: 550px;
+            border-radius: 5px; /* Rounded corners */
+            backdrop-filter: blur(10px);
+        }
+
+        /* Style for the close button */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        /* Style for the user input and submit button */
+        .user-input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .reviews-container {
+            border: white 1px solid;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            height: 450px;
+            overflow-y: scroll;
+            background-color: rgba(100, 100, 100, 0.9);
+        }
+
+        .reviews-container p {
+            border: 3px white solid;
+            border-radius: 5px;
+            margin: 15px 10px;
+            padding: 15px;
+            font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+            background-color: rgba(50, 80, 100, 0.9);
+        }
+
+        .submit-button {
+            padding: 10px 20px;
+            background-color: mediumslateblue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 5px;
+            font-size: large;
+            font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+        }
+
+        .submit-button:hover {
+            background-color: cornflowerblue;
+        }
+
+        #review-summary {
+            position: relative;
+            bottom: 0;
+            left: 0;
+            float: left;
+            z-index: -2;
+            padding-top: 30px;
+            margin: 30px auto 0;
+            padding-bottom: 70px;
+            width: 100%;
+        }
+
+        #wiki-review-summary {
+            position: relative;
+            bottom: 0;
+            left: 0;
+            float: left;
+            z-index: -2;
+            padding-top: 30px;
+            padding-bottom: 70px;
+            width: 100%;
+        }
+
+        #movie-summary h2 {
+            font-family: 'inter', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+            text-align: left;
+        }
+
+        #wiki-movie-summary h2 {
+            font-family: 'inter', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+            text-align: left;
+        }
+
+        #summary, #wiki-summary {
+            text-align: left;
+            width: 80%;
+            height: 55vh;
+            overflow-y: scroll;
+            padding: 10px;
+            margin: 10px auto;
+            border-radius: 5px;
+            animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+            font-size: medium;
+            background-color: black;
+            float: left;
+        }
+
+        /* Resetting default button styles */
+        .likes-container {
+            display: inline-flex;
+            bottom: 125px;
+            float: right;
+            right: 20px;
+            position: fixed;
+
+        }
+        .like-button,
+        .dislike-button {
+            margin: 10px;
+            padding: 5px 10px;
+            width: 100px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s, background-color 0.3s, transform 0.3s;
+        }
+
+        .like-button:focus,
+        .dislike-button:focus {
+            outline: none;
+        }
+
+        /* Styling the icons */
+        .like-button i,
+        .dislike-button i {
+            margin-right: 5px;
+        }
+
+        /* Styling the like button */
+        .like-button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #64b5f6; /* Material blue */
+        }
+
+        .like-button:hover {
+            color: #fff; /* Change text color on hover */
+            background-color: #1976d2; /* Darker blue on hover */
+            transform: scale(1.05); /* Grow slightly on hover */
+        }
+
+        /* Styling the dislike button */
+        .dislike-button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #ef5350; /* Material red */
+        }
+
+        .dislike-button:hover {
+            color: #fff; /* Change text color on hover */
+            background-color: #c62828; /* Darker red on hover */
+            transform: scale(1.05); /* Grow slightly on hover */
+        }
+
+
+        #generate-review-summary {
+            display: none;
+            padding: 10px 20px;
+            background-color: mediumslateblue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 3px;
+            font-size: large;
+            font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+        }
+
+        #generate-review-summary:hover, #wiki-generate-review-summary:hover {
+            background-color: cornflowerblue;
+        }
+
+        /* Style for horizontal scroll view */
+        .scroll-view {
+            position: relative;
+            display: flex;
+            z-index: 1000;
+            overflow-x: auto;
+            white-space: nowrap;
+            width: 80%;
+        }
+        /* Style for each image container */
+        .image-container {
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+
+        .gallery {
+            float: left;
+            margin-top: 50px;
+            position: relative;
+            display: block;
+            z-index: -1;
+        }
+
+        #trailer-container {
+            width: 80%; /* Maximum width of 90% of the screen width */
+            left: 0;
+            margin-bottom: 100px;
+        }
+
+        #background-video {
+            width: 100%; /* Take up 100% of the container's width */
+            height: calc(100vw * 9 / 16); /* Set height in ratio to width (16:9 aspect ratio) */
+            max-height: 90vh; /* Maximum height of 90% of the viewport height */
+            float: left;
+            left: 0;
+            margin-bottom: 50px;
+            border-radius: 5px;
+        }
+
+        #movies-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            padding: 10px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            float: left;
+            position: relative;
+            width: 80%;
+        }
+        .movie {
+            background-color: #f3f3f3;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .movie:hover {
+            transform: translateY(-5px);
+        }
+        .movie img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .movie-info {
+            padding: 10px;
+            text-align: center;
+        }
+        .movie-title {
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .movie-title:hover {
+            color: #ff4500; /* Change color on hover */
+        }
+
+        .container {
+            position: relative;
+        }
+        .slide-container {
+            position: fixed;
+            top: 0;
+            left: -300px; /* Initially off screen */
+            width: 300px;
+            height: 100%;
+            background-color: grey;
+            transition: left 0.3s ease; /* Transition effect */
+            z-index: 1001; /* Ensure it's above other content */
+        }
+        #open-btn {
+            position: absolute;
+            top: 35px;
+            left: 20px;
+            background-color: black;
+            font-size: large;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000; /* Ensure it's above other content */
+            border-radius: 5px;
+        }
+        #close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #explore {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        #explore:hover {
+            background-color: #cccccc;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand">&nbsp;&nbsp;&nbsp;&nbsp;Movie Review Database - MRDB</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <button id="open-btn">🟰</button>
+        <div id="slide-container" class="slide-container">
+            <button id="close-btn">❌</button>
+            <br/><br/><br>
+            <a class="menu-button" id="explore" href="#movies-container">Explore movies</a>
+        </div>
+    </div>
+
+    <script>
+        const openBtn = document.getElementById('open-btn');
+        const slideContainer = document.getElementById('slide-container');
+        const closeBtn = document.getElementById('close-btn');
+        const exploreBtn = document.getElementById('explore');
+
+        openBtn.addEventListener('click', () => {
+            slideContainer.style.left = '0'; // Slide in from left
+        });
+
+        closeBtn.addEventListener('click', () => {
+            slideContainer.style.left = '-300px'; // Slide out to left
+        });
+
+        // Close slide container when "Explore movies" button is clicked
+        exploreBtn.addEventListener('click', () => {
+            slideContainer.style.left = '-300px'; // Slide out to left
+        });
+    </script>
+
+    <h1>&nbsp;&nbsp;&nbsp;Hello {{ username }} !  &nbsp;&nbsp;&nbsp;🎥&nbsp;&nbsp;&nbsp; Welcome to Movie Review Database &nbsp;&nbsp;&nbsp;🎥&nbsp;&nbsp;&nbsp;
+    Scrape the web and get your movie details from imdb and wikipedia! &nbsp;&nbsp;&nbsp;🎥&nbsp;&nbsp;&nbsp; This website is made by Abhijeet Rajhans and is still under development &nbsp;&nbsp;&nbsp;🎥&nbsp;&nbsp;&nbsp; Hope you like it!&nbsp;&nbsp;&nbsp;</h1>
+
+    <div class="search-movie">
+        <label for="input">Search a movie</label>
+
+        <input type="text" id="input" placeholder="Search your movie here" name="input">
+        <button type="submit" value="Search" name="Search" onclick="processInput()">Search</button>
+
+    </div>
+
+    <div class="buttons">
+        <button class="button-1-comments" onclick="openComments()">Comments</button>
+    </div>
+
+    <img id="outputImage" src="" alt="Output Image">
+
+    <div id="output-container">
+        <p id="output">Enter the movie name in the search box :)</p>
+    </div>
+
+    <a class="abhijeetrajhans" id="goToProfile" href="/redirect-page?username={{ username }}"> {{ username }}</a>
+
+    <div class="social">
+        <a>●</a>
+        <a href="https://github.com/abhijeetrajhansgithub" target="_blank">Github</a>
+        <a>●</a>
+        <a href="https://linkedin.com/in/abhijeetrajhans" target="_blank">LinkedIn</a>
+        <a>●</a>
+    </div>
+
+    <div class="likes-container" id="likes-container" style="display: none">
+        <button class="like-button" id="like-button" onclick="function likeMovie() {
+            const likeButton = document.getElementById('like-button');
+            const dislikeButton = document.getElementById('dislike-button');
+
+            const username = '{{ username }}';
+            const titleText = _constJson['Title'];
+
+            fetch('/like-movie', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username, title: titleText })
+            }).then();
+
+            loadButtons()
+        }
+        likeMovie()">
+            <i class="fas fa-thumbs-up"></i> Like
+        </button>
+        <button class="dislike-button" id="dislike-button" onclick="function dislikeMovie() {
+            const likeButton = document.getElementById('like-button');
+            const dislikeButton = document.getElementById('dislike-button');
+
+            const username = '{{ username }}';
+            const titleText = _constJson['Title'];
+
+            fetch('/dislike-movie', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username, title: titleText })
+            })
+            .then();
+
+            loadButtons()
+        }
+        dislikeMovie()">
+            <i class="fas fa-thumbs-down"></i> Dislike
+        </button>
+    </div>
+
+    <div id="commentsModal" class="modal">
+        <span class="close" onclick="closeCommentsModal()">x</span>
+
+        <!-- Reviews container -->
+        <div id="reviews-container" class="reviews-container">
+            <p>Other reviews:</p>
+        </div>
+
+        <!-- User input for current user's review -->
+        <label for="user-input"></label><input type="text" id="user-input" class="user-input" placeholder="Your review...">
+        <button class="submit-button" onclick="submitReview()">Submit</button>
+    </div>
+
+    <div class="gallery" id="gallery" style="width: 90%;">
+        <div class="scroll-view" id="actors-gallery">
+        <!-- Images and actor names will be dynamically added here -->
+        </div>
+    </div>
+
+    <div class="review-summary" id="review-summary">
+        <button id="generate-review-summary"
+                style="
+                    display: none;
+                    padding: 10px 20px;
+                    background-color: mediumslateblue;
+                    color: white;
+                    border: none;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    border-radius: 3px;
+                    font-size: large;
+                    font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;"
+                onclick="function generateReviewSummary() {
+            const summary = document.getElementById('summary');
+
+            // get movie name from the search bar
+            const movieName = document.getElementById('input').value;
+            const titleText = _constJson['Title'];
+
+            if (movieName.trim() === '') {
+                summary.innerText = 'Please enter a movie name.';
+                alert('Please enter a movie name.');
+            } else {
+                fetch('create-review-summary', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({title: titleText }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.summary === 'No comments yet!') {
+                            summary.innerText = 'No comments yet!';
+                        } else {
+                            summary.innerText = data.summary;
+                        }
+
+                    })
+            }
+        }
+        generateReviewSummary()">Generate Review Summary</button>
+
+        <div id="movie-summary" class="movie-summary">
+            <h2>What other's have said about this movie?</h2>
+            <p id="summary"></p>
+        </div>
+    </div>
+
+    <div class="wiki-review-summary" id="wiki-review-summary">
+        <button id="wiki-generate-review-summary"
+                style="
+                    display: block;
+                    padding: 10px 20px;
+                    background-color: mediumslateblue;
+                    color: white;
+                    border: none;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    border-radius: 3px;
+                    font-size: large;
+                    font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;"
+                onclick="function getWikiDetails() {
+                const summary = document.getElementById('wiki-summary');
+
+                // get movie name from the search bar
+                const movieName = document.getElementById('input').value;
+                const titleText = _constJson['Title'];
+
+                if (movieName.trim() === '') {
+                    summary.innerText = 'Please enter a movie name.';
+                } else {
+                    fetch('load-wikipedia', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({title: titleText }),
+                    }).then(response => response.json())
+                    .then(data => {summary.innerText = data.title + '\n' + data.summary + '\n' + data.url}
+                    )
+                }
+                }
+                getWikiDetails()"
+                >Get Wikipedia Details</button>
+
+        <div id="wiki-movie-summary" class="wiki-movie-summary">
+            <h2>What wikipedia says about this movie?</h2>
+            <p id="wiki-summary"></p>
+        </div>
+    </div>
+
+    <!-- Trailer: issue found!-->
+
+    <div id="trailer-container">
+        <iframe id="background-video" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <!-- movies container -->
+
+    <div id="movies-container"></div>
+
+
+
+    <script>
+
+        // Make a POST request to the Flask endpoint
+        fetch('/get-movies-list', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: 'your_username' // Provide the username if required by the backend
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Get the list of movies from the response, display only the first 30
+            const movies = data.list.slice(0, 40);
+
+            // Get the container to display movies
+            const moviesContainer = document.getElementById('movies-container');
+
+            // Iterate over the movies and create HTML elements for each
+            movies.forEach(movie => {
+                const movieElement = document.createElement('div');
+                movieElement.classList.add('movie');
+                movieElement.innerHTML = `
+                    <h3 style="color: black">${movie.title}</h3>
+                    <a href="https://www.themoviedb.org${movie.href}" target="_blank">
+                        <img src="${movie.src}" alt="${movie.title}">
+                    </a>
+                `;
+                moviesContainer.appendChild(movieElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching movies:', error);
+        });
+
+        const username = document.getElementById('goToProfile').textContent;
+
+        if (navigator.onLine) {
+            console.log('You are online!');
+        } else {
+            console.log('You are offline. Please check your internet connection.');
+            alert('You are offline. Please check your internet connection.');
+        }
+        const img__init = document.getElementById('outputImage');
+        const commentsButton__init = document.querySelector('.button-1-comments');
+        commentsButton__init.hidden = !img__init.complete || img__init.naturalWidth === 0;
+
+        const movie_summarizer_div = document.getElementById('movie-summary');
+        movie_summarizer_div.hidden = !img__init.complete || img__init.naturalWidth === 0;
+
+        const modal = document.getElementById('commentsModal');
+        modal.setAttribute('hidden', 'true');
+
+        const likes_container = document.getElementById('likes-container');
+        likes_container.hidden = !img__init.complete || img__init.naturalWidth === 0;
+
+        const generateReviewSummary = document.getElementById("generate-review-summary")
+        generateReviewSummary.hidden = !img__init.complete || img__init.naturalWidth === 0;
+
+        const wiki_summary = document.getElementById('wiki-review-summary');
+        wiki_summary.hidden = !img__init.complete || img__init.naturalWidth === 0;
+
+        const trailer_container = document.getElementById('trailer-container');
+        trailer_container.hidden = !img__init.complete || img__init.naturalWidth === 0;
+
+        let json;
+        let _constJson;
+
+        // ##############################################################################################
+
+        document.addEventListener('DOMContentLoaded', function() {
+          const openBtn = document.getElementById('open-btn');
+          const closeBtn = document.getElementById('close-btn');
+          const slideContainer = document.getElementById('slide-container');
+
+          openBtn.addEventListener('click', function() {
+            slideContainer.style.left = '0';
+          });
+
+          closeBtn.addEventListener('click', function() {
+            slideContainer.style.left = '-300px';
+          });
+        });
+
+
+
+        // ##############################################################################################
+
+        function loadLikesOrDislikes() {
+            const likeButton = document.getElementById('like-button');
+            const dislikeButton = document.getElementById('dislike-button');
+
+            const username = '{{ username }}';
+            const titleText = _constJson['Title'];
+
+            fetch('/check-likes-and-dislikes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username, title: titleText })
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success === true) {
+                    if (data.liked) {
+                        likeButton.classList.add('liked');
+                        likeButton.innerHTML = "Already liked";
+                    } else {
+                        likeButton.classList.remove('liked');
+                        likeButton.innerHTML = "Like";
+                    }
+
+                    if (data.disliked) {
+                        dislikeButton.classList.add('disliked');
+                        dislikeButton.innerHTML = "Already disliked";
+                    } else {
+                        dislikeButton.classList.remove('disliked');
+                        dislikeButton.innerHTML = "Dislike";
+                    }
+                } else {
+                    console.log("Error:", data.message);
+                }
+            });
+        }
+
+
+        function processInput() {
+            // Get input value
+            const inputValue = document.getElementById('input').value;
+
+            // Send an AJAX request to Flask
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/process_input', true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Update the output text
+                    // get json
+                    json = JSON.parse(xhr.responseText);
+                    _constJson = JSON.parse(xhr.responseText);
+
+                    document.getElementById('outputImage').src = json['Image']
+                    document.getElementById('output').innerText = json['Data']
+
+                    loadReviews()
+                    // reload the loadLikesOrDislikes function
+
+                    // wait for 5 seconds before reloading
+
+                    /*
+                    Add the changes here only
+                     */
+
+                    // Dynamically create HTML elements for images and actor names
+                    const actorsData = json['cast'];
+                    const galleryContainer = document.getElementById("actors-gallery");
+
+                    // Clear the gallery container
+                    galleryContainer.innerHTML = "";
+
+                    actorsData.forEach(function(item) {
+                        // Create container for image and actor name
+                        const container = document.createElement("div");
+                        container.classList.add("actor-container");
+
+                        // Create image element
+                        const image = document.createElement("img");
+                        image.src = item[0]; // Set image source
+                        image.alt = item[1]; // Set image alt (actor name)
+                        image.classList.add("image-container"); // Add class for styling
+                        image.style.width = "200px"; // Set width of image
+                        image.style.height = "auto"; // Set height to auto to maintain aspect ratio
+                        image.style.cursor = "pointer"
+                        container.appendChild(image); // Append image to container
+
+                        // Create actor name element
+                        const actorName = document.createElement("p");
+                        actorName.textContent = item[1]; // Set actor name
+                        container.appendChild(actorName); // Append actor name to container
+
+                        // Add click event listener to the container
+                        container.addEventListener("click", function() {
+                            // Construct the Google search URL
+                            const searchQuery = "Other movies by " + encodeURIComponent(item[1]);
+                            const googleSearchUrl = "https://www.google.com/search?q=" + searchQuery;
+
+                            // Open the URL in a new tab
+                            window.open(googleSearchUrl, "_blank");
+                        });
+
+                        // Append container to gallery container
+                        galleryContainer.appendChild(container); // Append container to gallery container
+                    });
+
+
+                    loadLikesOrDislikes()
+
+                    // get trailer -- issue found!
+                    get_trailer()
+                }
+            };
+
+            xhr.send(JSON.stringify({ input: inputValue }))
+
+        }
+
+        function get_trailer() {
+                        const trailer = document.getElementById('trailer-container').querySelector('iframe');
+
+                        fetch('/get-trailer', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                'title': _constJson['Title']
+                            })
+                        }).then(response => response.json())
+                        .then(data => {
+                            console.log(data['id'])
+                            trailer.src = 'https://www.youtube.com/embed/' + data['id'] + '?si=3PrBJahz-hvzJcMo'
+                        })
+                    }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Set focus on the input field when the page loads
+            document.getElementById("input").focus();
+
+            // Add an event listener to capture the "/" key press
+            document.addEventListener("keydown", function(event) {
+                // Check if the pressed key is "/" and prevent its entry in the input field
+                if (event.key === "/") {
+                    event.preventDefault();
+                    // Set focus on the input field
+                    document.getElementById("input").focus();
+                }
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Set focus on the input field when the page loads
+            document.getElementById("input").focus();
+
+            // Add an event listener to capture the "Enter" key press
+            document.getElementById("input").addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    // Prevent the default form submission behavior
+                    event.preventDefault();
+                    // Execute the processInput function if the input is not empty
+                    if (document.getElementById("input").value.trim() !== "") {
+                        processInput();
+                    }
+                }
+            });
+        });
+
+        // ###############################################################################
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Set an interval to check the image source regularly
+            setInterval(checkImageSrc, 1000); // Check every 1000 milliseconds (1 second)
+        });
+
+        function checkImageSrc() {
+            console.log("inside checkImageSrc")
+            const img = document.getElementById('outputImage');
+            const commentsButton = document.querySelector('.button-1-comments');
+
+            commentsButton.hidden = !img.complete || img.naturalWidth === 0;
+
+            const movie_summarizer_div = document.getElementById('movie-summary');
+
+            const likes_container = document.getElementById('likes-container');
+            const generateReviewSummary = document.getElementById("generate-review-summary")
+
+            const output = document.getElementById('output');
+
+            if (!(output.innerHTML === "Enter the movie name in the search box :)")) {
+                // show comments button
+                commentsButton.style.display = 'block';
+                movie_summarizer_div.style.display = 'block';
+                likes_container.style.display = 'inline-flex';
+                generateReviewSummary.style.display = 'block';
+            } else {
+                likes_container.style.display = 'none';
+                generateReviewSummary.style.display = 'none';
+            }
+
+            const wiki_summary = document.getElementById('wiki-review-summary');
+            wiki_summary.hidden = !img__init.complete || img__init.naturalWidth === 0;
+
+            if (!(output.innerHTML === "Enter the movie name in the search box :)")) {
+                wiki_summary.style.display = 'block';
+            } else {
+                wiki_summary.style.display = 'none';
+            }
+
+            const trailer_container = document.getElementById('trailer-container');
+
+            if (!(output.innerHTML === "Enter the movie name in the search box :)")) {
+                trailer_container.style.display = 'block';
+            } else {
+                trailer_container.style.display = 'none';
+            }
+
+            loadButtons()
+
+        }
+
+        function openComments() {
+            console.log("function openComments")
+            console.log(json['Title'])
+            const modal = document.getElementById('commentsModal');
+            modal.removeAttribute('hidden');
+
+            // focus on the input field
+            document.getElementById("user-input").focus();
+
+            document.addEventListener("keydown", function (event) {
+                // Check if the pressed key is "/"
+                if (event.key === "/") {
+                    // Prevent the default behavior (e.g., typing "/" in the input field)
+                    event.preventDefault();
+
+                    // Set focus on the input field
+                    document.getElementById("user-input").focus();
+                }
+            });
+        }
+
+        function closeCommentsModal() {
+            const modal = document.getElementById('commentsModal');
+            modal.setAttribute('hidden', 'true');
+        }
+
+        function submitReview() {
+            const titleText = json['Title'];
+            const username = "{{ username }}";
+            const reviewInput = document.querySelector('.user-input');
+            const reviewText = reviewInput.value;
+
+            // Send JSON data to Flask server
+            fetch('/submit-review', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ review: reviewText, title: titleText, username: username }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+
+                // After submitting, reload reviews by fetching data from /load-data
+                alert(data.message);
+                loadReviews();
+            })
+            .catch(error => {
+                console.error('Error submitting review:', error);
+            });
+
+            // Clear the review input
+            reviewInput.value = '';
+        }
+
+        function loadReviews() {
+            const username = "{{ username }}";
+            const titleText = _constJson['Title'];
+            console.log("Title Text: ", titleText)
+            // Make an AJAX request to Flask server with the movie title
+            fetch('/load-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username: username, title: titleText}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the reviews container with the loaded data
+                const reviewsContainer = document.getElementById('reviews-container');
+                reviewsContainer.innerHTML = '';
+
+                data.comments.forEach(comment => {
+                    const p = document.createElement('p');
+                    p.textContent = comment;
+                    reviewsContainer.appendChild(p);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading reviews:', error);
+            });
+        }
+
+        // ##########################################################################################
+        // ##########################################################################################
+
+        function loadButtons() {
+            const likeButton = document.getElementById('like-button');
+            const dislikeButton = document.getElementById('dislike-button');
+
+            // Reload buttons division
+            fetch('/check-likes-and-dislikes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: '{{ username }}', title: _constJson['Title'] })
+            }).then(response => response.json())
+            .then(data => {
+                if (data.liked) {
+                    likeButton.innerHTML = "Already liked";
+                    dislikeButton.innerHTML = "Dislike";
+                } else if (data.disliked) {
+                    likeButton.innerHTML = "Like";
+                    dislikeButton.innerHTML = "Already disliked";
+                }
+            })
+        }
+
+    </script>
+</body>
+
+</html>

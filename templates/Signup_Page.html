@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Signup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            color: black;
+            padding: 0;
+            background-color: #4d0000; /* Initial color - darkest shades of red */
+            animation: colorChange 5s infinite alternate; /* Animation properties */
+        }
+
+        @keyframes colorChange {
+            0% {
+                background-color: #4d0000; /* Starting color - darkest shades of red */
+            }
+
+            100% {
+                background-color: #000033; /* Ending color - darkest shades of blue */
+            }
+        }
+
+        form {
+            width: 300px;
+            margin: 180px auto 50px;
+            background-color: rgba(255, 255, 255, 0.5); /* Translucent white background */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px); /* Blur effect */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #27ae60;
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #219f4e;
+        }
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.7);
+            width: 100%;
+            right: 0;
+            left: 0;
+            display: inline-flex;
+            padding: 20px;
+        }
+
+        .abhijeetrajhans {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .social {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            color: black;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .social a {
+            color: black;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .social a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand">Movie Review Database - MRDB</a>
+        </div>
+    </nav>
+
+    <form action="/create-user" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <div class="abhijeetrajhans">a b h i j e e t r a j h a n s</div>
+
+    <div class="social">
+        <a>●</a>
+        <a href="https://github.com/abhijeetrajhansgithub" target="_blank">Github</a>
+        <a>●</a>
+        <a href="https://linkedin.com/in/abhijeetrajhans" target="_blank">LinkedIn</a>
+        <a>●</a>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Signup Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            text-align: center;
+            padding: 50px;
+            color: #f4f4f4;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 7px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-btn {
+            background-color: #3498db;
+        }
+
+        .login-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .signup-btn {
+            background-color: #27ae60;
+        }
+
+        .signup-btn:hover {
+            background-color: #2ecc71;
+        }
+
+        .glow-rectangle {
+            position: absolute;
+            width: 600px;
+            height: 180px;
+            background-color: transparent;
+            border: 2px solid black;
+            box-shadow: 0 0 10px 5px peru;
+            animation: glow 2s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 25px;
+            z-index: -100;
+            padding: 50px;
+            top: 200px;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 2px 2px peru;
+            }
+            to {
+                box-shadow: 0 0 2px 2px lightskyblue; /* Increase the glow effect by adjusting the values */
+            }
+        }
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            background-color: #333333;
+            width: 100%;
+            right: 0;
+            left: 0;
+            display: inline-flex;
+            padding: 20px;
+        }
+
+        .abhijeetrajhans {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .social {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .social a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .social a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand">Movie Review Database - MRDB</a>
+        </div>
+    </nav>
+
+    <div class="glow-rectangle">
+        <h1>Welcome to the Website V5.0.0.1</h1>
+        <p>Please log in or sign up to continue</p>
+
+        <a href="/login" class="button login-btn">Login</a>
+        <a href="/signup" class="button signup-btn">Sign Up</a>
+    </div>
+
+    <div class="abhijeetrajhans">a b h i j e e t r a j h a n s</div>
+
+    <div class="social">
+        <a>●</a>
+        <a href="https://github.com/abhijeetrajhansgithub" target="_blank">Github</a>
+        <a>●</a>
+        <a href="https://linkedin.com/in/abhijeetrajhans" target="_blank">LinkedIn</a>
+        <a>●</a>
+    </div>
+</body>
+
+</html>

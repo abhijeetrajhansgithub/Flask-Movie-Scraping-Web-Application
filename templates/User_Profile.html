@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <!-- Add your CSS styles here if needed -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: black;
+            color: #f4f4f4;
+        }
+
+        .header {
+            display: flex
+        }
+
+        .header h2 {
+            margin: 5px;
+        }
+
+        #comments-container {
+            border: white 1px solid;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            height: 450px;
+            overflow-y: scroll;
+            background-color: rgba(100, 100, 100, 0.9);
+        }
+
+        #comments-container p {
+            border: 3px white solid;
+            border-radius: 15px;
+            margin: 15px 10px;
+            padding: 15px;
+            font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+            background-color: rgba(50, 80, 100, 0.9);
+        }
+
+        #comments-container button {
+            background-color: lightcoral;
+            padding: 10px;
+            border-radius: 7px;
+            transition: background-color 0.3s ease;
+            margin: 10px;
+        }
+
+        #comments-container button:hover {
+            background-color: red;
+        }
+
+        /* Set custom scrollbar width and color */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 85%;
+            border-radius: 20px;
+            margin: 15px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #4CAF50; /* Set the color of the thumb */
+            border-radius: 6px; /* Set border radius to make it round */
+            height: 85%;
+            margin: 15px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #f1f1f1; /* Set the color of the track */
+            height: 85%;
+            border-radius: 20px;
+            margin: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>User Profile</h1>
+    </header>
+
+    <!-- Display the username -->
+    <div class="header">
+        <h2>Welcome</h2>
+        <h2 id="username">{{ username }}</h2>
+        <h2>!</h2>
+    </div>
+
+
+    <main>
+        <section>
+            <!-- Container for comments -->
+            <div id="comments-container"></div>
+        </section>
+    </main>
+
+    <!-- Add your JavaScript here -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Get the username from the HTML
+            const username = $('#username').text().trim();
+
+            console.log(username);
+
+            // Fetch comments using AJAX
+            $.ajax({
+                url: '/load-user-profile-comments',
+                type: 'POST',
+                dataType: 'json',
+                data: { username: username },
+                success: function(data) {
+                    // Update the HTML with the received comments
+                    updateComments(data.list);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+
+
+            // Function to update the comments in the HTML
+            function updateComments(comments) {
+                // Get the container element
+                const commentsContainer = $('#comments-container');
+
+                // Clear existing content
+                commentsContainer.empty();
+
+                // Iterate through the comments and append them to the container
+                comments.forEach(function(comment) {
+                    const movieId = comment[0];
+                    const movieName = comment[1];
+                    const createdAt = comment[2];
+                    const content = comment[3];
+
+                    if (movieId === "None" && movieName === "None" && createdAt === "None" && content === "No comments yet!") {
+                        const commentElement_ = $('<p>').text(content);
+
+                        commentsContainer.append(commentElement_);
+                        return;
+                    }
+
+                    // Create a <p> element for each comment
+                    const commentElement = $('<p>').html(`Movie ID: ${movieId}<br>Movie Name: ${movieName}<br>Created At: ${createdAt}<br><hr><br>Content: ${content}`);
+
+                    // add a <br> tag as well
+                    commentElement.append('<br>');
+
+                    // Create a delete button for each comment
+                    const deleteButton = $('<button>').text('Delete');
+                    deleteButton.click(function() {
+                        // Handle delete action here, you can use createdAt and content as needed
+                        deleteComment(createdAt, content);
+                    });
+
+                    // Append the delete button to the comment element
+                    commentElement.append(deleteButton);
+
+                    // Append the <p> element to the container
+                    commentsContainer.append(commentElement);
+                });
+            }
+
+            // Function to handle delete action
+            function deleteComment(createdAt) {
+                // Make an AJAX request to delete-comment route
+                $.ajax({
+                    url: '/delete-comment',
+                    type: 'POST',
+                    data: { created_at: createdAt, username: username },
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log(data.message);
+
+                        // After successful deletion, fetch and update the comments again
+                        $.ajax({
+                            url: '/load-user-profile-comments',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: { username: username },
+                            success: function(data) {
+                                // Update the HTML with the received comments
+                                updateComments(data.list);
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
